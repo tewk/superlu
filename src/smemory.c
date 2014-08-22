@@ -27,8 +27,8 @@ extern void    user_bcopy      (char *, char *, int);
 
 /* Macros to manipulate stack */
 #define StackFull(x)         ( x + Glu->stack.used >= Glu->stack.size )
-#define NotDoubleAlign(addr) ( (long int)addr & 7 )
-#define DoubleAlign(addr)    ( ((long int)addr + 7) & ~7L )
+#define NotDoubleAlign(addr) ( (long long int)addr & 7 )
+#define DoubleAlign(addr)    ( ((long long int)addr + 7) & ~7L )
 #define TempSpace(m, w)      ( (2*w + 4 + NO_MARKER) * m * sizeof(int) + \
 			      (w + 1) * m * sizeof(float) )
 #define Reduce(alpha)        ((alpha + 1) / 2)  /* i.e. (alpha-1)/2 + 1 */
@@ -637,8 +637,8 @@ sStackCompress(GlobalLU_t *Glu)
     
     last = (char*)usub + xusub[ndim] * iword;
     fragment = (char*) (((char*)Glu->stack.array + Glu->stack.top1) - last);
-    Glu->stack.used -= (long int) fragment;
-    Glu->stack.top1 -= (long int) fragment;
+    Glu->stack.used -= (long long int) fragment;
+    Glu->stack.top1 -= (long long int) fragment;
 
     Glu->ucol = ucol;
     Glu->lsub = lsub;
